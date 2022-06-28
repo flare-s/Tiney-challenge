@@ -1,0 +1,14 @@
+.header {
+    background-color: var(--grey);
+    color: var(--purple);
+    margin: 0;
+    padding: calc(15rem / 16) 0;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: calc(28rem / 16);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
