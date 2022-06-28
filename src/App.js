@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Header from './components/Header';
+import ChildrenList from './components/ChildrenList';
 
 const usersState = [
   {
@@ -27,6 +28,7 @@ const usersState = [
 
 
 
+
 function App() {
   const [users, setUsers] = useState(usersState);
 
@@ -47,6 +49,8 @@ function App() {
     setUsers(prev => {
       return prev.map(user => {
         if (user.id === id) {
+          let date = new Date();
+          console.log(date);
           return ({...user, isSignedIn: true})
         }
         return user;
@@ -62,16 +66,7 @@ function App() {
         <section>
           <h2>Children's info</h2>
           <p>you have {users.length} children expected today</p>
-          <ul>
-            {users.map(user => (<li key={user.id} className={`user ${user.isSignedIn && "signid-in"}`}>
-              <div className='user-img'></div>
-              <div className='user-info'>
-                <p className='user-name'>{user.name}</p>
-                <p className='user-status'>{user.isSignedIn ? `Signed in at 08:55` : "Signed out"}</p>
-              </div>
-              <button className={"btn"} onClick={() => user.isSignedIn ? handleSignout(user.id) : handleSignin(user.id)}>{user.signedIn ? "Sign out" : "Sign in"}</button>
-            </li>))}
-          </ul>
+          <ChildrenList users={users} handleSignin={handleSignin} handleSignout={handleSignout}/>
         </section>
       </main>
     </div>
