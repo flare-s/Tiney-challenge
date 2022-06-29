@@ -33,6 +33,13 @@ function App() {
   const [users, setUsers] = useState(usersState);
 
   const handleSignout = (id) => {
+    let date = new Date();
+          let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
+          let time = date.toLocaleTimeString("en-US", timeOptions);
+    localStorage.setItem(`user-${id}`, JSON.stringify({
+      isLoggedIn: false,
+      time
+    }));
     setUsers(prev => {
       return prev.map(user => {
         if (user.id === id) {
@@ -46,12 +53,17 @@ function App() {
   }
 
   const handleSignin = (id) => {
+    let date = new Date();
+          let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
+          let time = date.toLocaleTimeString("en-US", timeOptions);
+    localStorage.setItem(`user-${id}`, JSON.stringify({
+      isLoggedIn: true,
+      time: time
+    }));
     setUsers(prev => {
       return prev.map(user => {
         if (user.id === id) {
-          let date = new Date();
-          console.log(date);
-          return ({...user, isSignedIn: true})
+          return ({...user, isSignedIn: true, signedInTime: time})
         }
         return user;
       })
@@ -64,9 +76,11 @@ function App() {
       <Header />
       <main>
         <section>
-          <h2>Children's info</h2>
-          <p>you have {users.length} children expected today</p>
-          <ChildrenList users={users} handleSignin={handleSignin} handleSignout={handleSignout}/>
+          <div className='container vertical-gutter'>
+            <h2>Children's info</h2>
+            <p>you have {users.length} children expected today.</p>
+            <ChildrenList users={users} setUsers={setUsers} handleSignin={handleSignin} handleSignout={handleSignout}/>
+          </div>
         </section>
       </main>
     </div>

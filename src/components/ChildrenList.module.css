@@ -1,0 +1,19 @@
+.user {
+    display: flex;
+    align-items: center;
+    padding: calc(15rem / 16) 0;
+    border-top: 1px solid var(--grey);
+
+}
+
+.user-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: var(--purple);
+    margin-right: calc(15rem / 16);
+}
+
+.user-info {
+    margin-right: auto;
+}
