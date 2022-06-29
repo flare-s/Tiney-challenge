@@ -3,15 +3,15 @@ import styles from "./ChildrenList.module.css";
 import Button from "./UI/Button";
 const ChildrenList = ({users, handleSignin, handleSignout, setUsers}) => {
   useEffect(() => {
-    users.forEach(userr => {
-      const userData = localStorage.getItem(`user-${userr.id}`);
+    users.forEach(userItem => {
+      const userData = localStorage.getItem(`user-${userItem.id}`);
         let parsed = JSON.parse(userData);
         if (parsed) {
           if (parsed.isLoggedIn) {
             setUsers(prev => {
               return prev.map(user => {
-                if (user.id === userr.id) {
-                  return ({...user, isSignedIn: true, signedInTime: parsed.time})
+                if (user.id === userItem.id) {
+                  return ({...user, isSignedIn: true, inAt: parsed.inAt})
                 }
                 return user;
               })
@@ -20,8 +20,8 @@ const ChildrenList = ({users, handleSignin, handleSignout, setUsers}) => {
           } else if(!parsed.isLoggedIn) {
             setUsers(prev => {
               return prev.map(user => {
-                if (user.id === userr.id) {
-                  return ({...user, isSignedIn: false})
+                if (user.id === userItem.id) {
+                  return ({...user, isSignedIn: false, outAt: parsed.outAt})
                 }
                 return user;
               })
@@ -33,11 +33,11 @@ const ChildrenList = ({users, handleSignin, handleSignout, setUsers}) => {
   }, []);
     return (
         <ul className={`${styles["chilldren-list"]} verical-gutter`}>
-            {users.map(user => (<li key={user.id} className={`${styles.user} ${user.isSignedIn && "signid-in"}`}>
+            {users.map(user => (<li key={user.id} className={`${styles.user} ${user.isSignedIn && styles["signed-in"]}`}>
               <div className={styles['user-img']}></div>
               <div className={`${styles['user-info']} vertical-gutter`}>
                 <p className={`${styles['user-name']}`}>{user.name}</p>
-                <p className={`${styles['user-status']}`}>{user.isSignedIn ? `Signed in at ${user.signedInTime ? user.signedInTime : "08:55"}` : "Signed out"}</p>
+                <p>{user.isSignedIn ? `Signed in on ${user.inAt ? user.inAt : "08:55"}` : `Signed out ${user.outAt ? `on ${user.outAt}`:''}`}</p>
               </div>
               {/* <button className={"btn"} onClick={() => user.isSignedIn ? handleSignout(user.id) : handleSignin(user.id)}>{user.isSignedIn ? "Sign out" : "Sign in"}</button> */}
               <Button className={`${user.isSignedIn && "outline"}`}

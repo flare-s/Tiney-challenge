@@ -34,16 +34,17 @@ function App() {
 
   const handleSignout = (id) => {
     let date = new Date();
-          let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
-          let time = date.toLocaleTimeString("en-US", timeOptions);
+    let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
+    let time = date.toLocaleTimeString("en-US", timeOptions);
+    let day = date.toLocaleDateString("en-US", {weekday: "short"})
     localStorage.setItem(`user-${id}`, JSON.stringify({
       isLoggedIn: false,
-      time
+      outAt: `${day} at ${time}`
     }));
     setUsers(prev => {
       return prev.map(user => {
         if (user.id === id) {
-          return ({...user, isSignedIn: false})
+          return ({...user, isSignedIn: false, outAt: `${day} at ${time}`})
         }
         return user;
       })
@@ -54,16 +55,17 @@ function App() {
 
   const handleSignin = (id) => {
     let date = new Date();
-          let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
-          let time = date.toLocaleTimeString("en-US", timeOptions);
+    let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
+    let time = date.toLocaleTimeString("en-US", timeOptions);
+    let day = date.toLocaleDateString("en-US", {weekday: "short"})
     localStorage.setItem(`user-${id}`, JSON.stringify({
       isLoggedIn: true,
-      time: time
+      inAt: `${day} at ${time}`
     }));
     setUsers(prev => {
       return prev.map(user => {
         if (user.id === id) {
-          return ({...user, isSignedIn: true, signedInTime: time})
+          return ({...user, isSignedIn: true, inAt: `${day} at ${time}`})
         }
         return user;
       })
@@ -77,7 +79,6 @@ function App() {
       <main>
         <section>
           <div className='container vertical-gutter'>
-            <h2>Children's info</h2>
             <p>you have {users.length} children expected today.</p>
             <ChildrenList users={users} setUsers={setUsers} handleSignin={handleSignin} handleSignout={handleSignout}/>
           </div>

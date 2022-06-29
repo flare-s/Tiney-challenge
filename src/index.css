@@ -1,7 +1,9 @@
 :root {
-  --grey: rgb(231, 223, 223);
+  --grey: rgb(237, 235, 235);
+  --dark-grey: rgb(137, 137, 137);
   --purple: rgb(65, 17, 117);
   --red: rgb(187, 50, 50);
+  --green: rgb(50, 185, 82);
   --white: rgb(255, 255, 255);
 }
 
@@ -17,6 +19,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--dark-grey);
 }
 
 
