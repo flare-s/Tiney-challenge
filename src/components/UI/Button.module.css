@@ -6,6 +6,8 @@
     color: var(--white);
     border: 1px solid var(--red);
     transition: background-color .3s ease-in-out;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 .btn.outline {

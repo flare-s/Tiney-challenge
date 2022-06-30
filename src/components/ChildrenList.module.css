@@ -7,17 +7,22 @@
 
 }
 
-.user-img {
-    height: 50px;
-    width: 50px;
+.user-img-container {
     position: relative;
     border-radius: 50%;
     margin-bottom: calc(15rem/16);
-    background-color: var(--purple);
-    object-fit: cover;
 }
 
-.user-img::after {
+.user-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: var(--purple);
+    object-fit: cover;
+
+}
+
+.user-img-container::after {
     content: "";
     position: absolute;
     width: 15px;
@@ -29,7 +34,7 @@
     transition: background-color .3s ease-in-out;
 }
 
-.signed-in .user-img::after {
+.signed-in .user-img-container::after {
     background-color: var(--green);
 }
 
@@ -53,7 +58,7 @@
         text-align: start;
     }
 
-    .user-img {
+    .user-img-container {
         margin-bottom: 0;
         margin-right: calc(15rem / 16);
     }

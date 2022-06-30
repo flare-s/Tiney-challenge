@@ -40,40 +40,22 @@ const usersState = [
 function App() {
   const [users, setUsers] = useState(usersState);
 
-  const handleSignout = (id) => {
+  //handle user sign-in
+  const handleSignin = (id, isSignedIn) => {
     let date = new Date();
     let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
     let time = date.toLocaleTimeString("en-US", timeOptions);
     let day = date.toLocaleDateString("en-US", {weekday: "short"})
-    localStorage.setItem(`user-${id}`, JSON.stringify({
-      isLoggedIn: false,
-      outAt: `${day} at ${time}`
-    }));
+    // add the sign-in time to locaL storage
+    let userObj = {}
+    userObj.isLoggedIn = isSignedIn;
+    isSignedIn ? userObj.inAt = `${day} at ${time}` : userObj.outAt = `${day} at ${time}`;
+    localStorage.setItem(`user-${id}`, JSON.stringify(userObj));
+    // Update the user state with the sign-in/sign-out time
     setUsers(prev => {
       return prev.map(user => {
         if (user.id === id) {
-          return ({...user, isSignedIn: false, outAt: `${day} at ${time}`})
-        }
-        return user;
-      })
-
-    })
-  
-  }
-
-  const handleSignin = (id) => {
-    let date = new Date();
-    let timeOptions = {hour12: false, hour: '2-digit', minute: "2-digit"};
-    let time = date.toLocaleTimeString("en-US", timeOptions);
-    let day = date.toLocaleDateString("en-US", {weekday: "short"})
-    localStorage.setItem(`user-${id}`, JSON.stringify({
-      isLoggedIn: true,
-      inAt: `${day} at ${time}`
-    }));
-    setUsers(prev => {
-      return prev.map(user => {
-        if (user.id === id) {
-          return ({...user, isSignedIn: true, inAt: `${day} at ${time}`})
+          return isSignedIn ? ({...user, isSignedIn, inAt: `${day} at ${time}`}) : ({...user, isSignedIn, outAt: `${day} at ${time}`})
         }
         return user;
       })
@@ -82,17 +64,17 @@ function App() {
   
   }
   return (
-    <div className="App">
+    <>
       <Header />
       <main>
         <section>
           <div className='container vertical-gutter'>
             <p>you have {users.length} children expected today.</p>
-            <ChildrenList users={users} setUsers={setUsers} handleSignin={handleSignin} handleSignout={handleSignout}/>
+            <ChildrenList users={users} setUsers={setUsers} handleSignin={handleSignin}/>
           </div>
         </section>
       </main>
-    </div>
+    </>
   );
 }
 
