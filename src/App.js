@@ -1,27 +1,35 @@
 import { useState } from 'react';
 import Header from './components/Header';
 import ChildrenList from './components/ChildrenList';
+import daniel from "./img/Daniel.jpg";
+import rue from "./img/Rue.jpg";
+import sami from "./img/Sami.jpg";
+import sara from "./img/Sara.jpg";
 
 const usersState = [
   {
     name: "Rue",
     isSignedIn: true,
     id: "1",
+    img: rue
   },
   {
     name: "Daniel",
     isSignedIn: false,
-    id: "2"
+    id: "2",
+    img: daniel
   },
   {
     name: "Sami",
     isSignedIn: false,
-    id: "3"
+    id: "3",
+    img: sami
   },
   {
     name: "Sara",
     isSignedIn: true,
-    id: "4"
+    id: "4",
+    img: sara
   },
 ]
 
